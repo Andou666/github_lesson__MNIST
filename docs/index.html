@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MNIST Test</title>
+    <style type="text/css">
+        #title {
+            text-align: center;
+        }
+
+        #clearButton {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button {
+            font-size: 20px;
+            padding: 10px 30px;
+        }
+
+        .result {
+            text-align: center;
+            font-size: 30px;
+        }
+
+        .header {
+            font-size: 30px;
+        }
+        html, body, main, canvas {
+            margin: 0;
+            padding: 0;
+        }
+
+        table {
+            width: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            
+        }
+        
+        @media screen and (max-width: 768px) {
+            th, td {
+            display:block;
+            float:left;
+            clear:both;
+            width: 100%;
+        }
+}
+
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1 id="title"> MNIST Check </h1>
+    
+        <div id="result" class="result">Your figure is ... </div>
+        <table>
+            <tr class="header">
+                <td>Please draw here</td>
+                <td>Input Image</td>
+            </tr>
+            <tr>
+                <td><canvas id='canvas' width=280 height=280 style="background-color:black;"></canvas></td>
+                <td><canvas id='canvas2' width=280 height=280 style="background-color:black;"></canvas></td>
+            </tr>
+        </table>
+        <div id="clearButton"><button type="button" onclick="allClear()" class="button">Clear</button>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+    <script type="text/javascript" src="draw.js"></script>
+    <script>
+        var model;
+        window.onload = async function () {
+            drawSetup($('canvas'), $('canvas2'));
+            model = await tf.loadLayersModel('./model/model.json');
+        }
+
+        function allClear() {
+            $('result').innerHTML = "Your figure is ... ";
+            canvasClear($('canvas'));
+            canvasClear($('canvas2'));
+        }
+
+        function $(id) {
+            return document.getElementById(id);
+        }
+    </script>
+
+</body>
+
+</html>
